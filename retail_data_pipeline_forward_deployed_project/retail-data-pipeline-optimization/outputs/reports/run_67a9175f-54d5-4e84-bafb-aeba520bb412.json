@@ -1,0 +1,42 @@
+{
+  "run_id": "67a9175f-54d5-4e84-bafb-aeba520bb412",
+  "started_at": "2026-10-28T14:06:59.571699+00:00",
+  "status": "SUCCESS",
+  "tables": {
+    "customers": {
+      "input_rows": 1001,
+      "valid_rows": 1000,
+      "rejected_rows": 1,
+      "rejections_by_reason": {
+        "missing_required:customer_name": 1
+      }
+    },
+    "products": {
+      "input_rows": 100,
+      "valid_rows": 100,
+      "rejected_rows": 0,
+      "rejections_by_reason": {}
+    },
+    "orders": {
+      "input_rows": 5000,
+      "valid_rows": 4999,
+      "rejected_rows": 1,
+      "rejections_by_reason": {
+        "invalid_reference:customer_id": 1
+      }
+    },
+    "order_items": {
+      "input_rows": 10000,
+      "valid_rows": 9993,
+      "rejected_rows": 7,
+      "rejections_by_reason": {
+        "invalid_reference:order_id": 4,
+        "invalid_reference:product_id": 1,
+        "must_be_positive:quantity": 1,
+        "must_be_positive:unit_price": 1
+      }
+    }
+  },
+  "ended_at": "2026-10-28T14:06:59.635051+00:00",
+  "duration_seconds": 0.063358
+}

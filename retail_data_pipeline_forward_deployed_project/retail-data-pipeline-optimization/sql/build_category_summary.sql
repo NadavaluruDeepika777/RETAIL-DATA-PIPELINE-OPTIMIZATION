@@ -1,0 +1,15 @@
+-- Optimization: calculate the category summary once.
+
+CREATE OR REPLACE TABLE category_sales_summary AS
+SELECT
+    p.category,
+    SUM(oi.quantity * oi.unit_price) AS revenue,
+    SUM(oi.quantity) AS units_sold,
+    COUNT(DISTINCT o.order_id) AS completed_orders
+FROM clean_order_items AS oi
+JOIN clean_orders AS o
+    ON oi.order_id = o.order_id
+JOIN clean_products AS p
+    ON oi.product_id = p.product_id
+WHERE o.status = 'COMPLETED'
+GROUP BY p.category;

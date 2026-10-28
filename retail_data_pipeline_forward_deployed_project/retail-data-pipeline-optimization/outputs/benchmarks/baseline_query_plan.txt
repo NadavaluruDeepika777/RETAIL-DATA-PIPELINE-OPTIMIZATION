@@ -1,0 +1,142 @@
+┌─────────────────────────────────────┐
+│┌───────────────────────────────────┐│
+││    Query Profiling Information    ││
+│└───────────────────────────────────┘│
+└─────────────────────────────────────┘
+EXPLAIN ANALYZE  SELECT     p.category,     SUM(oi.quantity * oi.unit_price) AS revenue,     SUM(oi.quantity) AS units_sold,     COUNT(DISTINCT o.order_id) AS completed_orders FROM clean_order_items AS oi JOIN clean_orders AS o     ON oi.order_id = o.order_id JOIN clean_products AS p     ON oi.product_id = p.product_id WHERE o.status = 'COMPLETED' GROUP BY p.category ORDER BY p.category 
+┌────────────────────────────────────────────────┐
+│┌──────────────────────────────────────────────┐│
+││              Total Time: 0.0030s             ││
+│└──────────────────────────────────────────────┘│
+└────────────────────────────────────────────────┘
+┌───────────────────────────┐
+│           QUERY           │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│      EXPLAIN_ANALYZE      │
+│    ────────────────────   │
+│           0 Rows          │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         PROJECTION        │
+│    ────────────────────   │
+│__internal_decompress_strin│
+│           g(#0)           │
+│             #1            │
+│             #2            │
+│             #3            │
+│                           │
+│           4 Rows          │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│          ORDER_BY         │
+│    ────────────────────   │
+│       p.category ASC      │
+│                           │
+│           4 Rows          │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         PROJECTION        │
+│    ────────────────────   │
+│__internal_compress_string_│
+│        uhugeint(#0)       │
+│             #1            │
+│             #2            │
+│             #3            │
+│                           │
+│           4 Rows          │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         PROJECTION        │
+│    ────────────────────   │
+│__internal_decompress_strin│
+│           g(#0)           │
+│             #1            │
+│             #2            │
+│             #3            │
+│                           │
+│           4 Rows          │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│       HASH_GROUP_BY       │
+│    ────────────────────   │
+│         Groups: #0        │
+│                           │
+│        Aggregates:        │
+│          sum(#1)          │
+│          sum(#2)          │
+│     count(DISTINCT #3)    │
+│                           │
+│           4 Rows          │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         PROJECTION        │
+│    ────────────────────   │
+│          category         │
+│ (CAST(quantity AS DOUBLE) │
+│       * unit_price)       │
+│          quantity         │
+│          order_id         │
+│                           │
+│         7486 Rows         │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         PROJECTION        │
+│    ────────────────────   │
+│             #0            │
+│             #1            │
+│             #2            │
+│__internal_compress_string_│
+│        uhugeint(#3)       │
+│                           │
+│         7486 Rows         │
+│          (0.00s)          │
+└─────────────┬─────────────┘
+┌─────────────┴─────────────┐
+│         HASH_JOIN         │
+│    ────────────────────   │
+│      Join Type: INNER     │
+│                           │
+│        Conditions:        ├───────────────────────────────────────────┐
+│  product_id = product_id  │                                           │
+│                           │                                           │
+│         7486 Rows         │                                           │
+│          (0.00s)          │                                           │
+└─────────────┬─────────────┘                                           │
+┌─────────────┴─────────────┐                             ┌─────────────┴─────────────┐
+│         HASH_JOIN         │                             │         TABLE_SCAN        │
+│    ────────────────────   │                             │    ────────────────────   │
+│      Join Type: INNER     │                             │   Table: clean_products   │
+│                           │                             │   Type: Sequential Scan   │
+│        Conditions:        │                             │                           │
+│    order_id = order_id    ├──────────────┐              │        Projections:       │
+│                           │              │              │         product_id        │
+│                           │              │              │          category         │
+│                           │              │              │                           │
+│         7486 Rows         │              │              │          100 Rows         │
+│          (0.00s)          │              │              │          (0.00s)          │
+└─────────────┬─────────────┘              │              └───────────────────────────┘
+┌─────────────┴─────────────┐┌─────────────┴─────────────┐
+│         TABLE_SCAN        ││         TABLE_SCAN        │
+│    ────────────────────   ││    ────────────────────   │
+│           Table:          ││    Table: clean_orders    │
+│     clean_order_items     ││   Type: Sequential Scan   │
+│                           ││   Projections: order_id   │
+│   Type: Sequential Scan   ││                           │
+│                           ││          Filters:         │
+│        Projections:       ││     status='COMPLETED'    │
+│          order_id         ││                           │
+│         product_id        ││                           │
+│          quantity         ││                           │
+│         unit_price        ││                           │
+│                           ││                           │
+│         9985 Rows         ││         3763 Rows         │
+│          (0.00s)          ││          (0.00s)          │
+└───────────────────────────┘└───────────────────────────┘

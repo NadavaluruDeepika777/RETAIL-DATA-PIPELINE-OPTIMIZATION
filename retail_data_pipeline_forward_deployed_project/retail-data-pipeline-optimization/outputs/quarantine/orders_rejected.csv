@@ -1,0 +1,2 @@
+order_id,customer_id,order_date,status,source_file,source_row_number,run_id,rejection_reasons
+1,1999,2026-05-02 14:58:44,COMPLETED,orders.csv,2,67a9175f-54d5-4e84-bafb-aeba520bb412,invalid_reference:customer_id

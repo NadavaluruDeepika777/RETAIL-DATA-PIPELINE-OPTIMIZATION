@@ -1,0 +1,29 @@
+{
+  "status": "SUCCESS",
+  "correctness": "PASS",
+  "input_directory": "outputs/validated",
+  "repetitions": 7,
+  "baseline": {
+    "median_seconds": 0.0028523849999970707,
+    "min_seconds": 0.0026036269999991646,
+    "max_seconds": 0.003470777999993402,
+    "repetitions": 7
+  },
+  "summary_build_seconds": 0.002663277999999991,
+  "optimized_summary_read": {
+    "median_seconds": 0.00042340199999557626,
+    "min_seconds": 0.00036901299999669845,
+    "max_seconds": 0.0005115820000014537,
+    "repetitions": 7
+  },
+  "speedup": 6.736824578124035,
+  "runtime_reduction_pct": 85.15621138114206,
+  "summary_build_plus_one_read_seconds": 0.0030866799999955674,
+  "category_count": 4,
+  "notes": [
+    "Query timings exclude data loading and the warm-up execution.",
+    "Speedup compares baseline query execution with summary-read execution.",
+    "Summary build time is reported separately; it is not included in the summary-read speedup calculation.",
+    "Actual performance depends on data size, hardware, caching, and workload."
+  ]
+}

@@ -1,0 +1,8 @@
+order_item_id,order_id,product_id,quantity,unit_price,source_file,source_row_number,run_id,rejection_reasons
+1,5999,22,3,3070.63,order_items.csv,2,67a9175f-54d5-4e84-bafb-aeba520bb412,invalid_reference:order_id
+2,2903,1099,1,3947.95,order_items.csv,3,67a9175f-54d5-4e84-bafb-aeba520bb412,invalid_reference:product_id
+3,1681,91,0,1799.02,order_items.csv,4,67a9175f-54d5-4e84-bafb-aeba520bb412,must_be_positive:quantity
+4,2541,75,5,-10.0,order_items.csv,5,67a9175f-54d5-4e84-bafb-aeba520bb412,must_be_positive:unit_price
+2634,1,74,4,922.96,order_items.csv,2635,67a9175f-54d5-4e84-bafb-aeba520bb412,invalid_reference:order_id
+4056,1,31,4,1258.81,order_items.csv,4057,67a9175f-54d5-4e84-bafb-aeba520bb412,invalid_reference:order_id
+5339,1,8,4,1052.49,order_items.csv,5340,67a9175f-54d5-4e84-bafb-aeba520bb412,invalid_reference:order_id

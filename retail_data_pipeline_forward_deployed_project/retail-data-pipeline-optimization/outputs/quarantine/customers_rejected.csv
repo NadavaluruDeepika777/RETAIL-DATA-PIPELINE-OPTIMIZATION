@@ -1,0 +1,2 @@
+customer_id,customer_name,city,signup_date,source_file,source_row_number,run_id,rejection_reasons
+1,,Bengaluru,2025-08-13,customers.csv,1002,67a9175f-54d5-4e84-bafb-aeba520bb412,missing_required:customer_name
